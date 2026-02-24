@@ -9,21 +9,17 @@
     modesetting.enable = true;
     open = false; # GTX 1080
     nvidiaSettings = true;
-    powerManagement.enable = true;
+    powerManagement.enable = false;
 
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-  boot.kernelParams = [ "nvidia-drm.modeset=1" ];
-
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
+  # claude suggested these
+  environment.sessionVariables = {
+    WLR_NO_HARDWARE_CURSORS = "1"; # fix broken cursor
+    NIXOS_OZONE_WL = "1";          # Electron apps run natively on Wayland
   };
 
-  programs.hyprland.enable = true;
-  programs.hyprland.xwayland.enable = true;
+  boot.kernelParams = [ "nvidia-drm.modeset=1" ];
 
-  xdg.portal.enable = true;
-  xdg.portal.wlr.enable = true;
-}
+} 

@@ -26,10 +26,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Use lts kernel because of nvidia-drivers
-  boot.kernelPackages = pkgs.linuxPackages_6_6;
+  # boot.kernelPackages = pkgs.linuxPackages_6_6;
 
   networking.hostName = "obelnix"; # Define your hostname.
 
@@ -77,13 +77,6 @@
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
-    wofi
-    waybar
-    hyprpaper
-    dunst
-    wl-clipboard
-    grim
-    slurp
   ];
 
 

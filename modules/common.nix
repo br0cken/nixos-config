@@ -16,11 +16,13 @@
     fzf
     git
     killall
-    netcat
+    netcat-openbsd
+    ripgrep
     stow
     starship
-    vim 
+    vim
     wget
+    yazi
     zoxide
   ];
 
@@ -33,4 +35,3 @@
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 }
-

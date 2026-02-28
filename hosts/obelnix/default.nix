@@ -11,7 +11,6 @@
     ../../modules/common.nix
     ../../modules/nvidia-pascal.nix
 
-    ../../modules/desktop/applications.nix
     ../../modules/desktop/hyprland.nix
     ];
 
@@ -27,9 +26,6 @@
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  # Use lts kernel because of nvidia-drivers
-  # boot.kernelPackages = pkgs.linuxPackages_6_6;
 
   networking.hostName = "obelnix"; # Define your hostname.
 
@@ -62,7 +58,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tobias = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "libvirtd" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       tree
     ];
@@ -71,8 +67,9 @@
   # allow nonfree packages
   nixpkgs.config.allowUnfree = true;
 
-  programs.firefox.enable = true;
   programs.steam.enable = true;
+
+  virtualisation.libvirtd.enable = true;
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
@@ -92,7 +89,18 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    ports = [ 22 ];
+    settings = {
+      PasswordAuthentication = false;
+      UseDns = true;
+      X11Forwarding = false;
+      PermitRootLogin = "no";
+    };
+  };
+
+
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

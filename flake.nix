@@ -18,11 +18,15 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.tobias = ./users/tobias/home-manager.nix;
-
-            # Optionally, use home-manager.extraSpecialArgs to pass
-            # arguments to home.nix
+            home-manager.extraSpecialArgs = { isDesktop = true; };
           }
         ];
+      };
+    };
+    homeConfigurations = {
+      wsl = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        modules = [ ./users/developer/home-manager.nix ];
       };
     };
   };

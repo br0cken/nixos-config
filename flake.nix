@@ -2,12 +2,22 @@
   description = "NixOS System configuration";
 
   inputs = {
+    # NixOS
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # home-manager
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, ... }: {
+  outputs = inputs@{ nixpkgs, darwin, home-manager, ... }: {
     nixosConfigurations = {
       obelnix = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -23,6 +33,17 @@
         ];
       };
     };
+
+    darwinConfigurations =  {
+      yggdrasil  = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          ./hosts/yggdrasil
+        ];
+        specialArgs = {inherit inputs;};
+      };
+    };
+
     homeConfigurations = {
       wsl = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;

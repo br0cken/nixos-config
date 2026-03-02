@@ -1,10 +1,8 @@
-{ config, pkgs, lib, isDesktop ? false, ... }:
+{ config, pkgs, lib, isDesktop ? false, homeDirectory,  ... }:
 
 {
   home.username = "tobias";
-  home.homeDirectory = lib.mkDefault (
-    if pkgs.stdenv.isDarwin then "/Users/tobias" else "/home/tobias"
-  );
+  home.homeDirectory = homeDirectory;
   home.stateVersion = "26.05";
 
   home.packages = with pkgs; [

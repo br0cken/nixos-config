@@ -28,9 +28,15 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.tobias = ./users/tobias/home-manager.nix;
-            home-manager.extraSpecialArgs = { isDesktop = true; };
+            home-manager.extraSpecialArgs = { 
+              isDesktop = true;
+              homeDirectory = "/home/tobias";
+            };
           }
         ];
+        specialArgs = {
+          inherit inputs;
+        };
       };
     };
 
@@ -44,7 +50,10 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.tobias = ./users/tobias/home-manager.nix;
-            home-manager.extraSpecialArgs = { isDesktop = true; };
+            home-manager.extraSpecialArgs = { 
+              isDesktop = true; 
+              homeDirectory = "/Users/tobias";
+            };
           }
         ];
         specialArgs = {

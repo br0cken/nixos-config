@@ -39,8 +39,17 @@
         system = "aarch64-darwin";
         modules = [
           ./hosts/yggdrasil
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.tobias = ./users/tobias/home-manager.nix;
+            home-manager.extraSpecialArgs = { isDesktop = true; };
+          }
         ];
-        specialArgs = {inherit inputs;};
+        specialArgs = {
+          inherit inputs;
+        };
       };
     };
 

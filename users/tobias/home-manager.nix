@@ -2,7 +2,9 @@
 
 {
   home.username = "tobias";
-  home.homeDirectory = "/home/tobias";
+  home.homeDirectory = lib.mkDefault (
+    if pkgs.stdenv.isDarwin then "/Users/tobias" else "/home/tobias"
+  );
   home.stateVersion = "26.05";
 
   home.packages = with pkgs; [

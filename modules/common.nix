@@ -16,7 +16,7 @@
     fzf
     git
     killall
-    netcat-openbsd
+   # netcat-openbsd marked as broken on darwin
     ripgrep
     stow
     starship
@@ -33,5 +33,7 @@
 
   # Setup ZSH
   programs.zsh.enable = true;
-  users.defaultUserShell = pkgs.zsh;
+
+  # this does not exist on darwin. ToDo: check if we need this for NixOS
+  # users.defaultUserShell = pkgs.zsh;
 }

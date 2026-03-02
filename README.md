@@ -8,6 +8,7 @@ This repository contains my NixOS configurations.
 sudo nix flake update --flake ~/.nixos-config
 sudo nixos-rebuild switch --flake ~/.nixos-config
 ```
+
 ## Darwin updates
 
 ```bash

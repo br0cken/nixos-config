@@ -10,6 +10,10 @@
     XDG_CONFIG_HOME = "$HOME/.config";
   };
 
+  system.defaults = {
+    dock.autohide = true;
+  };
+
   nixpkgs.config.allowUnfree = true;
 
   homebrew = {
@@ -26,6 +30,7 @@
       "discord"
       "eurkey"
       "ghostty"
+      "iina"
       "obsidian"
       "rectangle-pro"
       "scroll-reverser"

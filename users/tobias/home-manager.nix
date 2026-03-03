@@ -1,31 +1,41 @@
-{ config, pkgs, lib, isDesktop ? false, homeDirectory,  ... }:
+{ config, pkgs, lib, isDesktop ? false, homeDirectory ? "/Users/tobias", ... }:
 
 {
+  imports = [
+    ../../modules/home/zed.nix
+  ];
+
   home.username = "tobias";
-  home.homeDirectory = homeDirectory;
+  home.homeDirectory = lib.mkForce homeDirectory;
   home.stateVersion = "26.05";
 
   home.packages = with pkgs; [
     glow
+    # Desktop
   ] ++ lib.optionals isDesktop [
     ansible
-    bitwarden-desktop
     claude-code
-    discord
-    ghostty
     go
     gopls
     hugo
     httpie
     kubectl
-    obsidian
+    nil
     opentofu
+    yubikey-manager
+    # Not darwin
+  ] ++ lib.optionals (!pkgs.stdenv.isDarwin) [
+    netcat-openbsd
+    # Desktop not darwin
+  ] ++ lib.optionals (isDesktop && !pkgs.stdenv.isDarwin) [
+    bitwarden-desktop
+    ghostty
+    obsidian
     spotify
     virt-manager
-    yubikey-manager # provides ykman
   ];
 
-  programs.firefox = lib.mkIf isDesktop {
+  programs.firefox = lib.mkIf (isDesktop && !pkgs.stdenv.isDarwin) {
     enable = true;
     profiles.default = {
       settings = {
@@ -34,31 +44,7 @@
     };
   };
 
-  programs.zed-editor = lib.mkIf isDesktop {
-    enable = true;
-    extensions = [
-      "catppuccin"
-      "git-firefly"
-      "go"
-      "nix"
-      "python"
-      "toml"
-      "yaml"
-    ];
-
-    userSettings = {
-      theme = {
-        mode = "dark";
-        dark = "Catppuccin Macchiato";
-      };
-      vim_mode = true;
-      ui_font_family = "JetBrainsMono Nerd Font";
-      buffer_font_family = "JetBrainsMono Nerd Font";
-    };
-  };
-
-
-  programs.vscode.enable = lib.mkIf isDesktop true;
+  programs.vscode.enable = isDesktop && !pkgs.stdenv.isDarwin;
 
   services.syncthing.enable = lib.mkIf isDesktop true;
 

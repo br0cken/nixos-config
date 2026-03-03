@@ -1,27 +1,16 @@
 { config, lib, pkgs, ... }:
 
 {
-imports = [
-  ../../modules/common.nix
-];
+  imports = [
+    ../../modules/common.nix
+    ../../modules/darwin.nix
+  ];
 
-nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  networking.hostName = "yggdrasil";
 
-networking.hostName = "yggdrasil";
+  # needed for homebrew
+  system.primaryUser = "tobias";
 
-# this is needed for hombrew
-system.primaryUser = "tobias";
-
-nixpkgs.config.allowUnfree = true;
-
-programs.zsh.enable = true;
-
-homebrew = {
-  enable = true;
-  onActivation.autoUpdate = false;
-  onActivation.cleanup = "zap";
-};
-
-# set during installation. Do not change.
-system.stateVersion = 6;
+  # set during installation. Do not change.
+  system.stateVersion = 6;
 }

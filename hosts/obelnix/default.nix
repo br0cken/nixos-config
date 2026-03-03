@@ -9,6 +9,7 @@
     ./hardware-configuration.nix
 
     ../../modules/common.nix
+    ../../modules/nixos.nix
     ../../modules/nvidia-pascal.nix
 
     ../../modules/desktop/hyprland.nix
@@ -16,9 +17,6 @@
 
   # Enable passwordless sudo
   security.sudo.wheelNeedsPassword = false;
-
-  # Enable experimental nix features
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -64,8 +62,6 @@
     ];
   };
 
-  # allow nonfree packages
-  nixpkgs.config.allowUnfree = true;
 
   programs.steam.enable = true;
 

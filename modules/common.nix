@@ -16,14 +16,16 @@
     fzf
     git
     killall
-   # netcat-openbsd marked as broken on darwin
+    restic
     ripgrep
     stow
     starship
+    tmux
     vim
     wget
     yazi
     zoxide
+    zsh-history-substring-search
   ];
 
   # Install JetBrains Mono nerd font
@@ -34,6 +36,5 @@
   # Setup ZSH
   programs.zsh.enable = true;
 
-  # this does not exist on darwin. ToDo: check if we need this for NixOS
-  # users.defaultUserShell = pkgs.zsh;
+  nixpkgs.config.allowUnfree = true;
 }

@@ -1,4 +1,11 @@
-{ config, pkgs, lib, isDesktop ? false, homeDirectory ? "/Users/tobias", ... }:
+{
+  config,
+  pkgs,
+  lib,
+  isDesktop,
+  homeDirectory,
+  ...
+}:
 
 {
   imports = [
@@ -9,31 +16,37 @@
   home.homeDirectory = lib.mkForce homeDirectory;
   home.stateVersion = "26.05";
 
-  home.packages = with pkgs; [
-    glow
-    # Desktop
-  ] ++ lib.optionals isDesktop [
-    ansible
-    claude-code
-    go
-    gopls
-    hugo
-    httpie
-    kubectl
-    nil
-    opentofu
-    yubikey-manager
-    # Not darwin
-  ] ++ lib.optionals (!pkgs.stdenv.isDarwin) [
-    netcat-openbsd
-    # Desktop not darwin
-  ] ++ lib.optionals (isDesktop && !pkgs.stdenv.isDarwin) [
-    bitwarden-desktop
-    ghostty
-    obsidian
-    spotify
-    virt-manager
-  ];
+  home.packages =
+    with pkgs;
+    [
+      glow
+    ]
+    ++ lib.optionals isDesktop [
+      # Desktop
+      ansible
+      claude-code
+      go
+      gopls
+      hugo
+      httpie
+      kubectl
+      nil
+      nixd
+      opentofu
+      yubikey-manager
+    ]
+    ++ lib.optionals (!pkgs.stdenv.isDarwin) [
+      # Not darwin
+      netcat-openbsd
+    ]
+    ++ lib.optionals (isDesktop && !pkgs.stdenv.isDarwin) [
+      # Desktop not darwin
+      bitwarden-desktop
+      ghostty
+      obsidian
+      spotify
+      virt-manager
+    ];
 
   programs.firefox = lib.mkIf (isDesktop && !pkgs.stdenv.isDarwin) {
     enable = true;

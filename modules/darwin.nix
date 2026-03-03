@@ -1,8 +1,11 @@
-{ config, lib, pkgs, ... }:
 {
-  # Darwin sets the default shell per-user via `users.users.<name>.shell`
-  # rather than a global `users.defaultUserShell`.
-
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  # Needed for GUI applications on darwin to respect ~/.config
   environment.variables = {
     XDG_CONFIG_HOME = "$HOME/.config";
   };
@@ -13,6 +16,10 @@
     enable = true;
     onActivation.autoUpdate = false;
     onActivation.cleanup = "zap";
+    brews = [
+      "mas"
+      "zsh-history-substring-search"
+    ];
     casks = [
       "bartender"
       "bitwarden"

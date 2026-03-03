@@ -17,56 +17,63 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, darwin, home-manager, ... }: {
-    nixosConfigurations = {
-      obelnix = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/obelnix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.tobias = ./users/tobias/home-manager.nix;
-            home-manager.extraSpecialArgs = { 
-              isDesktop = true;
-              homeDirectory = "/home/tobias";
-            };
-          }
-        ];
-        specialArgs = {
-          inherit inputs;
+  outputs =
+    inputs@{
+      nixpkgs,
+      darwin,
+      home-manager,
+      ...
+    }:
+    {
+      nixosConfigurations = {
+        obelnix = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/obelnix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.tobias = ./users/tobias/home-manager.nix;
+              home-manager.extraSpecialArgs = {
+                isDesktop = true;
+                homeDirectory = "/home/tobias";
+              };
+            }
+          ];
+          specialArgs = {
+            inherit inputs;
+          };
+        };
+      };
+
+      darwinConfigurations = {
+        yggdrasil = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [
+            ./hosts/yggdrasil
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.tobias = ./users/tobias/home-manager.nix;
+              home-manager.extraSpecialArgs = {
+                isDesktop = true;
+                homeDirectory = "/Users/tobias";
+              };
+            }
+          ];
+          specialArgs = {
+            inherit inputs;
+          };
+        };
+      };
+
+      homeConfigurations = {
+        wsl = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [ ./users/developer/home-manager.nix ];
         };
       };
     };
-
-    darwinConfigurations =  {
-      yggdrasil  = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          ./hosts/yggdrasil
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.tobias = ./users/tobias/home-manager.nix;
-            home-manager.extraSpecialArgs = { 
-              isDesktop = true; 
-              homeDirectory = "/Users/tobias";
-            };
-          }
-        ];
-        specialArgs = {
-          inherit inputs;
-        };
-      };
-    };
-
-    homeConfigurations = {
-      wsl = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        modules = [ ./users/developer/home-manager.nix ];
-      };
-    };
-  };
 }

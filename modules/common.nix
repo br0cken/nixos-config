@@ -29,6 +29,7 @@
     stow
     starship
     tmux
+    tree
     vim
     wget
     yazi

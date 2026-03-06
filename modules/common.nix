@@ -1,10 +1,18 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  imports = [];
+  imports = [ ];
 
   # Enable experimental nix features
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
@@ -16,14 +24,17 @@
     fzf
     git
     killall
-    netcat-openbsd
+    restic
     ripgrep
     stow
     starship
+    tmux
+    tree
     vim
     wget
     yazi
     zoxide
+    zsh-history-substring-search
   ];
 
   # Install JetBrains Mono nerd font
@@ -33,5 +44,6 @@
 
   # Setup ZSH
   programs.zsh.enable = true;
-  users.defaultUserShell = pkgs.zsh;
+
+  nixpkgs.config.allowUnfree = true;
 }

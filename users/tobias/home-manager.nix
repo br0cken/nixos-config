@@ -1,31 +1,54 @@
-{ config, pkgs, lib, isDesktop ? false, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  isDesktop,
+  homeDirectory,
+  ...
+}:
 
 {
-  home.username = "tobias";
-  home.homeDirectory = "/home/tobias";
-  home.stateVersion = "26.05";
-
-  home.packages = with pkgs; [
-    glow
-  ] ++ lib.optionals isDesktop [
-    ansible
-    bitwarden-desktop
-    claude-code
-    discord
-    ghostty
-    go
-    gopls
-    hugo
-    httpie
-    kubectl
-    obsidian
-    opentofu
-    spotify
-    virt-manager
-    yubikey-manager # provides ykman
+  imports = [
+    ../../modules/home/zed.nix
   ];
 
-  programs.firefox = lib.mkIf isDesktop {
+  home.username = "tobias";
+  home.homeDirectory = lib.mkForce homeDirectory;
+  home.stateVersion = "26.05";
+
+  home.packages =
+    with pkgs;
+    [
+      glow
+    ]
+    ++ lib.optionals isDesktop [
+      # Desktop
+      ansible
+      claude-code
+      go
+      gopls
+      hugo
+      httpie
+      kubectl
+      nil
+      nixd
+      opentofu
+      yubikey-manager
+    ]
+    ++ lib.optionals (!pkgs.stdenv.isDarwin) [
+      # Not darwin
+      netcat-openbsd
+    ]
+    ++ lib.optionals (isDesktop && !pkgs.stdenv.isDarwin) [
+      # Desktop not darwin
+      bitwarden-desktop
+      ghostty
+      obsidian
+      spotify
+      virt-manager
+    ];
+
+  programs.firefox = lib.mkIf (isDesktop && !pkgs.stdenv.isDarwin) {
     enable = true;
     profiles.default = {
       settings = {
@@ -34,31 +57,7 @@
     };
   };
 
-  programs.zed-editor = lib.mkIf isDesktop {
-    enable = true;
-    extensions = [
-      "catppuccin"
-      "git-firefly"
-      "go"
-      "nix"
-      "python"
-      "toml"
-      "yaml"
-    ];
-
-    userSettings = {
-      theme = {
-        mode = "dark";
-        dark = "Catppuccin Macchiato";
-      };
-      vim_mode = true;
-      ui_font_family = "JetBrainsMono Nerd Font";
-      buffer_font_family = "JetBrainsMono Nerd Font";
-    };
-  };
-
-
-  programs.vscode.enable = lib.mkIf isDesktop true;
+  programs.vscode.enable = isDesktop && !pkgs.stdenv.isDarwin;
 
   services.syncthing.enable = lib.mkIf isDesktop true;
 

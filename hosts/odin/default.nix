@@ -60,7 +60,11 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tobias = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "libvirtd" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ 
+      "wheel" 
+      "libvirtd"
+      "kvm" 
+      ]; # extra groups
     packages = with pkgs; [
       tree
       sbctl
@@ -70,7 +74,10 @@
 
   programs.steam.enable = true;
 
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu.package = pkgs.qemu_kvm; # use pkgs.qemu instead for foreign architecture emulation
+  };
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).

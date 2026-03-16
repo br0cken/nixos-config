@@ -24,6 +24,7 @@
     fzf
     git
     killall
+    lazygit
     restic
     ripgrep
     stow

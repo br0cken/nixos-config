@@ -7,6 +7,7 @@ let
     "go"
     "nix"
     "python"
+    "terraform"
     "toml"
     "yaml"
   ];
@@ -22,6 +23,12 @@ let
     buffer_font_family = "JetBrainsMono Nerd Font";
   };
 
+  darwinSettings = settings // {
+    auto_install_extensions = builtins.listToAttrs (
+      map (ext: { name = ext; value = true; }) extensions
+    );
+  };
+
 in
 {
   # On Linux: nix manages the package and writes the config
@@ -33,6 +40,6 @@ in
 
   # On Darwin: brew manages the app, nix writes the config
   home.file.".config/zed/settings.json" = lib.mkIf (isDesktop && pkgs.stdenv.isDarwin) {
-    text = builtins.toJSON settings;
+    text = builtins.toJSON darwinSettings;
   };
 }

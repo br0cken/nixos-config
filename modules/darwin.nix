@@ -22,6 +22,8 @@
     onActivation.cleanup = "zap";
     brews = [
       "mas"
+      "podman"
+      "podman-compose"
       "zsh-history-substring-search"
     ];
     casks = [
@@ -32,6 +34,7 @@
       "ghostty"
       "iina"
       "obsidian"
+      "orcaslicer"
       "rectangle-pro"
       "scroll-reverser"
       "signal"

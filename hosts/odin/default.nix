@@ -9,6 +9,7 @@
     ./hardware-configuration.nix
 
     ../../modules/common.nix
+    ../../modules/nixos.nix
     ../../modules/nvidia-pascal.nix
 
     ../../modules/desktop/hyprland.nix
@@ -17,17 +18,18 @@
   # Enable passwordless sudo
   security.sudo.wheelNeedsPassword = false;
 
-  # Enable experimental nix features
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
+  # lanzaboote currently replaces systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+  };
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "obelnix"; # Define your hostname.
+  networking.hostName = "odin"; # Define your hostname.
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
@@ -58,18 +60,24 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tobias = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "libvirtd" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ 
+      "wheel" 
+      "libvirtd"
+      "kvm" 
+      ]; # extra groups
     packages = with pkgs; [
       tree
+      sbctl
     ];
   };
 
-  # allow nonfree packages
-  nixpkgs.config.allowUnfree = true;
 
   programs.steam.enable = true;
 
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu.package = pkgs.qemu_kvm; # use pkgs.qemu instead for foreign architecture emulation
+  };
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
@@ -132,4 +140,3 @@
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.11"; # Did you read the comment?
 }
-

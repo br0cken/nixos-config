@@ -11,8 +11,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # nix-darwin
     darwin = {
       url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    #secureboot
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -22,14 +29,15 @@
       nixpkgs,
       darwin,
       home-manager,
+      lanzaboote,
       ...
     }:
     {
       nixosConfigurations = {
-        obelnix = nixpkgs.lib.nixosSystem {
+        odin = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./hosts/obelnix
+            ./hosts/odin
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -40,6 +48,7 @@
                 homeDirectory = "/home/tobias";
               };
             }
+            lanzaboote.nixosModules.lanzaboote
           ];
           specialArgs = {
             inherit inputs;

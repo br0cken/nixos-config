@@ -62,4 +62,7 @@
   services.syncthing.enable = lib.mkIf isDesktop true;
 
   programs.home-manager.enable = true;
+
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 }

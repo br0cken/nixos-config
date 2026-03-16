@@ -9,8 +9,10 @@
 
 {
   imports = [
+    ../common.nix
     ../../modules/home/zed.nix
     ../../modules/home/ghostty.nix
+    ../../modules/home/vim.nix
   ];
 
   home.username = "tobias";
@@ -19,9 +21,7 @@
 
   home.packages =
     with pkgs;
-    [
-      glow
-    ]
+    []
     ++ lib.optionals isDesktop [
       # Desktop
       ansible
@@ -62,6 +62,8 @@
   services.syncthing.enable = lib.mkIf isDesktop true;
 
   programs.home-manager.enable = true;
+
+  programs.fzf.enable = true;
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;

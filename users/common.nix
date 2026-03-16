@@ -1,15 +1,15 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   home.packages = with pkgs; [
-    fzf
     glow
     hugo
     jq
-    netcat-openbsd
     httpie
     tmux
     zoxide
+  ] ++ lib.optionals (!pkgs.stdenv.isDarwin) [
+    netcat-openbsd
   ];
 
   programs.home-manager.enable = true;

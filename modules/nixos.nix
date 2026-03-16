@@ -6,4 +6,8 @@
 }:
 {
   users.defaultUserShell = pkgs.zsh;
+
+  environment.systemPackages = with pkgs; [
+    gptfdisk
+  ];
 }

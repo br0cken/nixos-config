@@ -2,15 +2,15 @@
 
 This repository contains my NixOS configurations. 
 
-## NixOS Updates
+## NixOS
 
 ```bash
+# Update the flake
+
 sudo nix flake update --flake ~/.nixos-config
+# NixOS
 sudo nixos-rebuild switch --flake ~/.nixos-config
-```
 
-## Darwin updates
-
-```bash
+# Darwin
 sudo darwin-rebuild switch --flake ~/.nixos-config
 ```

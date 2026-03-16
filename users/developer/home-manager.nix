@@ -7,6 +7,8 @@
   home.homeDirectory = "/home/developer";
   home.stateVersion = "26.05";
 
+  programs.fzf.enable = true;
+
   home.packages = with pkgs; [
     podman
     podman-compose

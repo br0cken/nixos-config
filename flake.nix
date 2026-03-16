@@ -17,16 +17,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    #secureboot
+    # secureboot
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    homeConfigurations = {
-      wsl = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        modules = [ ./users/developer/home-manager.nix ];
-      };
     };
   };
 

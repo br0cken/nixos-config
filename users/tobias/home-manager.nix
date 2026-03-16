@@ -10,6 +10,7 @@
 {
   imports = [
     ../../modules/home/zed.nix
+    ../../modules/home/ghostty.nix
   ];
 
   home.username = "tobias";
@@ -42,7 +43,6 @@
     ++ lib.optionals (isDesktop && !pkgs.stdenv.isDarwin) [
       # Desktop not darwin
       bitwarden-desktop
-      ghostty
       obsidian
       spotify
       virt-manager

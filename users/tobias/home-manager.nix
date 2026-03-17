@@ -28,17 +28,11 @@
       claude-code
       go
       gopls
-      hugo
-      httpie
       kubectl
       nil
       nixd
       opentofu
       yubikey-manager
-    ]
-    ++ lib.optionals (!pkgs.stdenv.isDarwin) [
-      # Not darwin
-      netcat-openbsd
     ]
     ++ lib.optionals (isDesktop && !pkgs.stdenv.isDarwin) [
       # Desktop not darwin
@@ -59,9 +53,7 @@
 
   programs.vscode.enable = isDesktop && !pkgs.stdenv.isDarwin;
 
-  services.syncthing.enable = lib.mkIf isDesktop true;
-
-  programs.home-manager.enable = true;
+  services.syncthing.enable = isDesktop;
 
   programs.fzf.enable = true;
 

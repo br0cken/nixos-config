@@ -29,12 +29,9 @@
     ripgrep
     stow
     starship
-    tmux
-    tree
     vim
     wget
     yazi
-    zoxide
     zsh-history-substring-search
   ];
 

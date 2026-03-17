@@ -10,11 +10,15 @@
     XDG_CONFIG_HOME = "$HOME/.config";
   };
 
+  nix.gc = {
+    automatic = true;
+    interval = { Weekday = 0; Hour = 2; Minute = 0; };
+    options = "--delete-older-than 30d";
+  };
+
   system.defaults = {
     dock.autohide = true;
   };
-
-  nixpkgs.config.allowUnfree = true;
 
   homebrew = {
     enable = true;

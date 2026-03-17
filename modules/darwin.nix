@@ -10,10 +10,27 @@
     XDG_CONFIG_HOME = "$HOME/.config";
   };
 
-  nix.gc = {
-    automatic = true;
-    interval = { Weekday = 0; Hour = 2; Minute = 0; };
-    options = "--delete-older-than 30d";
+  nix = {
+    gc = {
+      automatic = true;
+      interval = { Weekday = 0; Hour = 2; Minute = 0; };
+      options = "--delete-older-than 30d";
+    };
+
+    linux-builder = {
+      enable = false;
+      ephemeral = true;
+      maxJobs = 4;
+      config = ({ pkgs, ... }: {
+        virtualisation = {
+          cores = 6;
+          darwin-builder = {
+            diskSize = 50 * 1024;  # 50GB
+            memorySize = 16 * 1024; # 16GB
+          };
+        };
+      });
+    };
   };
 
   system.defaults = {

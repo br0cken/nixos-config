@@ -25,6 +25,7 @@
     git
     killall
     lazygit
+    nixos-rebuild
     restic
     ripgrep
     stow

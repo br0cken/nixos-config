@@ -1,62 +1,11 @@
-{
-  config,
-  pkgs,
-  lib,
-  isDesktop,
-  homeDirectory,
-  ...
-}:
+{ lib, homeDirectory, ... }:
 
 {
   imports = [
-    ../common.nix
-    ../../modules/home/zed.nix
-    ../../modules/home/ghostty.nix
-    ../../modules/home/vim.nix
+    ../../modules/home
   ];
 
   home.username = "tobias";
   home.homeDirectory = lib.mkForce homeDirectory;
   home.stateVersion = "26.05";
-
-  home.packages =
-    with pkgs;
-    []
-    ++ lib.optionals isDesktop [
-      # Desktop
-      ansible
-      claude-code
-      go
-      gopls
-      kubectl
-      nil
-      nixd
-      opentofu
-      yubikey-manager
-    ]
-    ++ lib.optionals (isDesktop && !pkgs.stdenv.isDarwin) [
-      # Desktop not darwin
-      bitwarden-desktop
-      obsidian
-      spotify
-      virt-manager
-    ];
-
-  programs.firefox = lib.mkIf (isDesktop && !pkgs.stdenv.isDarwin) {
-    enable = true;
-    profiles.default = {
-      settings = {
-        "browser.startup.homepage" = "https://nixos.org";
-      };
-    };
-  };
-
-  programs.vscode.enable = isDesktop && !pkgs.stdenv.isDarwin;
-
-  services.syncthing.enable = isDesktop;
-
-  programs.fzf.enable = true;
-
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
 }

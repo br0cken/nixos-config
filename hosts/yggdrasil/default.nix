@@ -7,9 +7,13 @@
 
 {
   imports = [
-    ../../modules/common.nix
-    ../../modules/darwin.nix
+    ../../modules/darwin
   ];
+
+  modules.common.enable = true;
+  modules.darwin-base.enable = true;
+
+  home-manager.users.tobias.modules.home.profiles.desktop.enable = true;
 
   networking.hostName = "yggdrasil";
 

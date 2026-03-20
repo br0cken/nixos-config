@@ -44,7 +44,6 @@
               home-manager.useUserPackages = true;
               home-manager.users.tobias = ./users/tobias/home-manager.nix;
               home-manager.extraSpecialArgs = {
-                isDesktop = true;
                 homeDirectory = "/home/tobias";
               };
             }
@@ -67,7 +66,6 @@
               home-manager.useUserPackages = true;
               home-manager.users.tobias = ./users/tobias/home-manager.nix;
               home-manager.extraSpecialArgs = {
-                isDesktop = true;
                 homeDirectory = "/Users/tobias";
               };
             }

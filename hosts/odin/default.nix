@@ -1,15 +1,25 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
     ./hardware-configuration.nix
 
-    ../../modules/common.nix
-    ../../modules/nixos.nix
-    ../../modules/nvidia-pascal.nix
+    ../../modules/nixos
+  ];
 
-    ../../modules/desktop/hyprland.nix
-    ];
+  modules.common.enable = true;
+  modules.nixos-base.enable = true;
+  modules.nvidia-pascal.enable = true;
+  modules.hyprland.enable = true;
+  modules.steam.enable = true;
+
+  home-manager.users.tobias.modules.home.profiles.desktop.enable = true;
+  home-manager.users.tobias.modules.home.apps.syncthing.enable = true;
 
   # Enable passwordless sudo
   security.sudo.wheelNeedsPassword = false;
@@ -37,18 +47,15 @@
 
   users.users.tobias = {
     isNormalUser = true;
-    extraGroups = [ 
-      "wheel" 
+    extraGroups = [
+      "wheel"
       "libvirtd"
-      "kvm" 
-      ]; # extra groups
+      "kvm"
+    ]; # extra groups
     packages = with pkgs; [
       sbctl
     ];
   };
-
-
-  programs.steam.enable = true;
 
   virtualisation.libvirtd = {
     enable = true;
@@ -65,8 +72,6 @@
       PermitRootLogin = "no";
     };
   };
-
-
 
   system.stateVersion = "25.11";
 }

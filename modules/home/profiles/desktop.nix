@@ -12,6 +12,7 @@
     modules.home.apps.zed.enable = true;
 
     programs.vscode.enable = !pkgs.stdenv.isDarwin;
+    programs.opencode.enable = true;
 
     home.packages = lib.optionals (!pkgs.stdenv.isDarwin) (with pkgs; [
       bitwarden-desktop

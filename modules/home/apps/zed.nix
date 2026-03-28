@@ -30,6 +30,9 @@ let
         value = true;
       }) extensions
     );
+    agent_servers = {
+      claude-acp = { type = "registry"; };
+    };
   };
 
 in
@@ -44,9 +47,13 @@ in
       userSettings = settings;
     };
 
-    # On Darwin: brew manages the app, nix writes the config
-    home.file.".config/zed/settings.json" = lib.mkIf pkgs.stdenv.isDarwin {
-      text = builtins.toJSON darwinSettings;
-    };
+    # On Darwin: brew manages the app, nix copies the config (not symlink, so it stays writable)
+    home.activation.zedConfig = lib.mkIf pkgs.stdenv.isDarwin (
+      lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        $DRY_RUN_CMD cp -f ${pkgs.writeText "zed-settings.json" (builtins.toJSON darwinSettings)} \
+          ${config.home.homeDirectory}/.config/zed/settings.json
+        $DRY_RUN_CMD chmod 644 ${config.home.homeDirectory}/.config/zed/settings.json
+      ''
+    );
   };
 }

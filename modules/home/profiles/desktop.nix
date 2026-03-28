@@ -18,6 +18,8 @@
       bitwarden-desktop
       discord
       obsidian
+      opencode-desktop
+      signal-desktop
       spotify
       virt-manager
     ]);

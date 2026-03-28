@@ -66,6 +66,7 @@
         "ghostty"
         "iina"
         "obsidian"
+        "opencode-desktop"
         "orcaslicer"
         "rectangle-pro"
         "scroll-reverser"

@@ -19,7 +19,10 @@
       nvidiaSettings = true;
       powerManagement.enable = false;
 
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      # Pascal (GTX 1080) is no longer supported by the stable/production
+      # branch (595+). legacy_580 (580.142) is the last branch with Pascal
+      # support.
+      package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
     };
 
     # claude suggested these

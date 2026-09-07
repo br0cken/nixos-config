@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   extensions = [
@@ -31,7 +36,9 @@ let
       }) extensions
     );
     agent_servers = {
-      claude-acp = { type = "registry"; };
+      claude-acp = {
+        type = "registry";
+      };
     };
   };
 

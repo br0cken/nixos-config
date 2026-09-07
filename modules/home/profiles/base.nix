@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.modules.home.profiles.base.enable = lib.mkEnableOption "base profile";
@@ -11,16 +16,19 @@
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;
 
-    home.packages = with pkgs; [
-      glow
-      hugo
-      jq
-      httpie
-      tmux
-      tree
-      zoxide
-    ] ++ lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) [
-      netcat-openbsd
-    ];
+    home.packages =
+      with pkgs;
+      [
+        glow
+        hugo
+        jq
+        httpie
+        tmux
+        tree
+        zoxide
+      ]
+      ++ lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) [
+        netcat-openbsd
+      ];
   };
 }

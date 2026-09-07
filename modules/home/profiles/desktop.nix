@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.modules.home.profiles.desktop.enable = lib.mkEnableOption "desktop profile";
@@ -14,14 +19,17 @@
     programs.vscode.enable = !pkgs.stdenv.hostPlatform.isDarwin;
     programs.opencode.enable = true;
 
-    home.packages = lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) (with pkgs; [
-      bitwarden-desktop
-      discord
-      obsidian
-      opencode-desktop
-      signal-desktop
-      spotify
-      virt-manager
-    ]);
+    home.packages = lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) (
+      with pkgs;
+      [
+        bitwarden-desktop
+        discord
+        obsidian
+        opencode-desktop
+        signal-desktop
+        spotify
+        virt-manager
+      ]
+    );
   };
 }

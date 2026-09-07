@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.modules.home.profiles.devops.enable = lib.mkEnableOption "devops profile";

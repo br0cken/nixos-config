@@ -1,0 +1,5 @@
+# Revisions to skip in git blame. Enable with:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# nix fmt: mechanical reformat of the whole tree
+97ed15d0a065dafe8c1bc9e6234ab2b9f7098ffb

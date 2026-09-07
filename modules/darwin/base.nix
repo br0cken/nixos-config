@@ -59,6 +59,7 @@
         "zsh-history-substring-search"
       ];
       casks = [
+        "autodesk-fusion"
         "bartender"
         "bitwarden"
         "discord"

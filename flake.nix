@@ -32,7 +32,15 @@
       lanzaboote,
       ...
     }:
+    let
+      forAllSystems = nixpkgs.lib.genAttrs [
+        "aarch64-darwin"
+        "x86_64-linux"
+      ];
+    in
     {
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
+
       nixosConfigurations = {
         odin = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

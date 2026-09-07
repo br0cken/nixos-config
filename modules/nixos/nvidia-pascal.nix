@@ -25,12 +25,8 @@
       package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
     };
 
-    # claude suggested these
     environment.sessionVariables = {
-      WLR_NO_HARDWARE_CURSORS = "1"; # fix broken cursor
       NIXOS_OZONE_WL = "1"; # Electron apps run natively on Wayland
     };
-
-    boot.kernelParams = [ "nvidia-drm.modeset=1" ];
   };
 }

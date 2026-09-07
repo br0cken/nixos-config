@@ -1,15 +1,18 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  imports = [ ./../common.nix ];
+  imports = [
+    ../../modules/home
+  ];
+
+  modules.home.profiles.base.enable = true;
 
   home.username = "developer";
   home.homeDirectory = "/home/developer";
   home.stateVersion = "26.05";
 
-  programs.fzf.enable = true;
-
   home.packages = with pkgs; [
+    lazygit
     podman
     podman-compose
     net-snmp

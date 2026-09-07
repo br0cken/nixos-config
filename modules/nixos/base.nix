@@ -19,6 +19,7 @@
 
     environment.systemPackages = with pkgs; [
       gptfdisk
+      killall # macOS ships its own, so this is linux-only
     ];
   };
 }

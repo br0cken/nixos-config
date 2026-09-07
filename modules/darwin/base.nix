@@ -56,7 +56,6 @@
         "mas"
         "podman"
         "podman-compose"
-        "zsh-history-substring-search"
       ];
       casks = [
         "autodesk-fusion"

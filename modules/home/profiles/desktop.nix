@@ -11,10 +11,10 @@
     modules.home.apps.vim.enable = true;
     modules.home.apps.zed.enable = true;
 
-    programs.vscode.enable = !pkgs.stdenv.isDarwin;
+    programs.vscode.enable = !pkgs.stdenv.hostPlatform.isDarwin;
     programs.opencode.enable = true;
 
-    home.packages = lib.optionals (!pkgs.stdenv.isDarwin) (with pkgs; [
+    home.packages = lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) (with pkgs; [
       bitwarden-desktop
       discord
       obsidian

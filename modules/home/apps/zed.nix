@@ -41,14 +41,14 @@ in
 
   config = lib.mkIf config.modules.home.apps.zed.enable {
     # On Linux: nix manages the package and writes the config
-    programs.zed-editor = lib.mkIf (!pkgs.stdenv.isDarwin) {
+    programs.zed-editor = lib.mkIf (!pkgs.stdenv.hostPlatform.isDarwin) {
       enable = true;
       inherit extensions;
       userSettings = settings;
     };
 
     # On Darwin: brew manages the app, nix copies the config (not symlink, so it stays writable)
-    home.activation.zedConfig = lib.mkIf pkgs.stdenv.isDarwin (
+    home.activation.zedConfig = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin (
       lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         $DRY_RUN_CMD cp -f ${pkgs.writeText "zed-settings.json" (builtins.toJSON darwinSettings)} \
           ${config.home.homeDirectory}/.config/zed/settings.json

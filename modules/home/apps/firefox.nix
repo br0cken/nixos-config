@@ -4,7 +4,7 @@
   options.modules.home.apps.firefox.enable = lib.mkEnableOption "firefox";
 
   config = lib.mkIf config.modules.home.apps.firefox.enable {
-    programs.firefox =  lib.mkIf (!pkgs.stdenv.isDarwin) {
+    programs.firefox =  lib.mkIf (!pkgs.stdenv.hostPlatform.isDarwin) {
     enable = true;
     profiles.default = {
       settings = {

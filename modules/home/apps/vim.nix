@@ -47,7 +47,7 @@ in
 
   config = lib.mkIf config.modules.home.apps.vim.enable {
     # On Linux: nix builds a custom vim package with the config embedded
-    programs.vim = lib.mkIf (!pkgs.stdenv.isDarwin) {
+    programs.vim = lib.mkIf (!pkgs.stdenv.hostPlatform.isDarwin) {
       enable = true;
       defaultEditor = true;
       extraConfig = vimConfig;
@@ -55,12 +55,12 @@ in
     };
 
     # On Darwin: system vim reads ~/.vimrc
-    home.file.".vimrc" = lib.mkIf pkgs.stdenv.isDarwin {
+    home.file.".vimrc" = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       text = vimConfig;
     };
 
     # On Darwin: install the catppuccin plugin into ~/.vim/pack
-    home.file.".vim/pack/plugins/start/catppuccin" = lib.mkIf pkgs.stdenv.isDarwin {
+    home.file.".vim/pack/plugins/start/catppuccin" = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
       source = "${pkgs.vimPlugins.catppuccin-vim}";
     };
   };

@@ -19,6 +19,7 @@
     home.packages =
       with pkgs;
       [
+        gh
         glow
         hugo
         jq

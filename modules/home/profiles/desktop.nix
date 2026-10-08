@@ -28,6 +28,7 @@
         opencode-desktop
         signal-desktop
         spotify
+        teamspeak6-client
         virt-manager
       ]
     );

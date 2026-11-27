@@ -29,5 +29,6 @@
     podman
     podman-compose
     net-snmp
+    obsidian
   ];
 }
